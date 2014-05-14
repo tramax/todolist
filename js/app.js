@@ -4,13 +4,12 @@ var App = {
 	_todoListSelector: ".todolist-items ul", // CSS selector to the todo list (ul)
 	_$todoInput: undefined, // cache the jQuery reference to the todo input
 	_$todoList: undefined, // cache the jQuery reference to the todo list
-	_todoItemTmpl: "<li class='todo-item'></li>", // HTML fragment string for a single todo item
 	_id: 1,
 	ENTER_KEY: 13,
 
 	init: function() {
 		this._$todoInput = $(this._todoSelector);
-		this._$todoList = $(this._todoList)
+		this._$todoList = $(this._todoListSelector)
 		this._bindEvents();
 	},
 
@@ -20,9 +19,10 @@ var App = {
 
 	_bindEvents: function() {
 		// when the enter key is pressed, addTodo
+		var that = this;
 		this._$todoInput.on("keyup", function(evt) {
-			if (evt.which() === this.ENTER_KEY) {
-				this._addTodo();
+			if (evt.which === that.ENTER_KEY) {
+				that._addTodo();
 			}
 		});
 	},
@@ -36,20 +36,21 @@ var App = {
 		};
 		this._todos.push(todo);
 		this._addTodoUi(todo);
+		this._$todoInput.val("");
 
 		return false;
 	},
 
 	// add a todo item to the todo list (UI)
 	_addTodoUi: function(todo) {
-		var todoDom = $(this._todoItemTmpl, {
-			html: todo.name,
-			attr: {
-				"data-todoId", todo.id
-			}
+		var todoDom = $("<li>", {
+			class: "todo-item",
+			text: todo.name
 		});
 		this._$todoList.append(todoDom);
 	}
 };
 
-App.init();
+$(function() {
+	App.init();	
+});
