@@ -1,3 +1,22 @@
+body {
+  background: #EAEAEA;
+}
+
+.strong {
+  font-weight: 700;
+}
+
+input[type="checkbox"] {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  background: none;
+  border: none;
+  -webkit-appearance: none;
+}
+
 input[type="checkbox"] {
   outline: none;
 }
@@ -10,17 +29,23 @@ input[type="checkbox"]:focus {
   outline: none;
 }
 
+.todolist-items {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15);
+}
+
 .todolist-items li {
   border: 1px solid #000000;
   position: relative;
   font-size: 24px;
+  background: #FDFDFD;
 }
 
 .todolist-items #new-todo {
   border: none;
-  margin: 0 0 0 45px;
   padding: 15px 60px 15px 15px;
+  margin-left: 45px;
   border-left: 1px solid #FF0000;
+  background: #FDFDFD;
 }
 
 .todolist-items #new-todo:focus {
@@ -31,6 +56,7 @@ input[type="checkbox"]:focus {
   margin: 0;
   padding: 0;
   list-style: none;
+  border-top: 15px solid #908079;
 }
 
 .todolist-items label {
@@ -39,17 +65,9 @@ input[type="checkbox"]:focus {
   border-left: 1px solid #FF0000;
 }
 
-input[type="checkbox"] {
+.toggle {
   height: 40px;
   width: 40px;
-  text-align: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  background: none;
-  border: none;
-  -webkit-appearance: none;
 }
 
 .toggle::after {
@@ -67,12 +85,18 @@ input[type="checkbox"] {
   position: relative;
 }
 
-.toggle-all::after {
-  content: "v";
-  line-height: 43px;
-  font-size: 20px;
+.toggle-all::before {
+  content: "»";
+  font-size: 50px;
   color: #d9d9d9;
-  text-shadow: 0 -1px 0 #bfbfbf;
+  padding: 0 25px 7px;
+}
+
+.toggle-all {
+  height: 41px;
+  width: 65px;
+  text-align: center;
+  -webkit-transform: rotate(90deg);
 }
 
 .destroy {
@@ -80,7 +104,7 @@ input[type="checkbox"] {
   background: transparent;
   outline: none;
   border: none;
-  color: #FF1111;
+  color: #a88a8a;
   height: 40px;
   width: 40px;
   font-size: 22px;
@@ -99,3 +123,12 @@ input[type="checkbox"] {
   display: block;
 }
 
+.todolist-counter {
+  float: left;
+}
+
+footer {
+  background: #EDEDED;
+  text-align: center;
+  padding: 0 15px;
+}
