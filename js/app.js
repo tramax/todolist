@@ -1,55 +1,92 @@
-var App = {
-	_todos: [], // the todos data store
-	_todoSelector: "#new-todo", // CSS selector pointing to the todo input
-	_todoListSelector: ".todolist-items ul", // CSS selector to the todo list (ul)
-	_$todoInput: undefined, // cache the jQuery reference to the todo input
-	_$todoList: undefined, // cache the jQuery reference to the todo list
-	_id: 1,
-	ENTER_KEY: 13,
+var App = (function() {
+	var todos = [], // the todos data store
+		todoSelector = "#new-todo", // CSS selector pointing to the todo input
+		todoListSelector = ".todolist-items ul", // CSS selector to the todo list (ul)
+		todoDoneToggleSelector = ".todo-item", // CSS selector to the element to toggle the done flag
+		$todoInput = undefined, // cache the jQuery reference to the todo input
+		$todoList = undefined, // cache the jQuery reference to the todo list
+		id = 1,
+		ENTER_KEY = 13;
 
-	init: function() {
-		this._$todoInput = $(this._todoSelector);
-		this._$todoList = $(this._todoListSelector)
-		this._bindEvents();
-	},
-
-	_nextId: function() {
-		return this._id++;
-	},
-
-	_bindEvents: function() {
-		// when the enter key is pressed, addTodo
-		var that = this;
-		this._$todoInput.on("keyup", function(evt) {
-			if (evt.which === that.ENTER_KEY) {
-				that._addTodo();
-			}
-		});
-	},
-
-	// add a todo model into todos, and add it to the UI
-	_addTodo: function() {
-		var todo = {
-			id: this._nextId(),
-			name: this._$todoInput.val(),
-			done: false
-		};
-		this._todos.push(todo);
-		this._addTodoUi(todo);
-		this._$todoInput.val("");
-
-		return false;
-	},
-
-	// add a todo item to the todo list (UI)
-	_addTodoUi: function(todo) {
-		var todoDom = $("<li>", {
-			class: "todo-item",
-			text: todo.name
-		});
-		this._$todoList.append(todoDom);
+	function nextId() {
+		return id++;
 	}
-};
+
+	return {
+
+		init: function() {
+			$todoInput = $(todoSelector);
+			$todoList = $(todoListSelector);
+			this.bindEvents();
+		},
+
+		bindEvents: function() {
+			var that = this;
+
+			// when the enter key is pressed, addTodo
+			$todoInput.on("keyup", function(evt) {
+				if (evt.which === ENTER_KEY) {
+					that.addTodo();
+				}
+			});
+
+			// when the toggleDone is clicked, toggleDone
+			$todoList.on("click", todoDoneToggleSelector, function(evt) {
+				var $todoElem = $(evt.target);
+				that.toggleDone($todoElem);
+			});
+		},
+
+		// add a todo model into todos, and add it to the UI
+		addTodo: function() {
+			var todo = {
+				id: nextId(),
+				name: $todoInput.val(),
+				done: false
+			};
+			todos.push(todo);
+			this.addTodoUi(todo);
+			$todoInput.val(""); // clear text box
+
+			return false;
+		},
+
+		// add a todo item to the todo list (UI)
+		addTodoUi: function(todo) {
+			var todoDom = $("<li>", {
+				class: "todo-item",
+				text: todo.name,
+				attr: {
+					"data-todoId": todo.id
+				}
+			});
+			$todoList.append(todoDom);
+		},
+
+		// add a todo item to the todo list (UI)
+		addTodoUi: function(todo) {
+			var todoDom = $("<li>", {
+				class: "todo-item",
+				text: todo.name,
+				attr: {
+					"data-todoId": todo.id
+				}
+			});
+			$todoList.append(todoDom);
+		},
+
+		// toggle the done flag for a todo item
+		toggleDone: function($todoElem) {
+			$todoElem.toggleClass("todo-done");
+			
+			todos.forEach(function(todo) {
+				if (todo.id === parseInt($todoElem.attr("data-todoId")), 10) {
+					
+				}
+			});
+		}
+	};
+})();
 
 $(function() {
 	App.init();	
