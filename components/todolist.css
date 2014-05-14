@@ -1,0 +1,17 @@
+.todolist-items li {
+  border: 1px solid #000000;
+  padding: 1em;
+}
+
+.todolist-items input {
+  width: 100%;
+  border: none;
+}
+
+.todolist-items input:focus {
+  outline: none;
+}
+
+.todolist-items > ul {
+  list-style: none;
+}
