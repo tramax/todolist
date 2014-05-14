@@ -11,17 +11,32 @@
 <body>
   <section class="todolist-container container">
   <h1>todos</h1>
-  <div class="todolist-items col-md-5">
+  <div class="todolist-items">
     <ul>
       <li>
-        <input id="new-todo" placeholder="What needs to be done?">
+        <div>
+          <input class="toggle-all" type="checkbox">
+          <input type="text" id="new-todo" placeholder="What needs to be done?">
+        </div>
       </li>
-      <li>item 1</li>
-      <li>item 2</li>
+      <li>
+        <div>
+          <input class="toggle" type="checkbox">
+          <label>First item</label>
+          <button class="destroy"></button>
+        </div>
+      </li>
+      <li>
+        <div>
+          <input class="toggle" type="checkbox">
+          <label>Second item</label>
+          <button class="destroy"></button>
+        </div>
+      </li>
     </ul>
   </div>
   </section>
   <script type="text/javascript" src="components/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="components/boostrap/js/boostrap.min.js"></script>
+  <script type="text/javascript" src="components/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
 </body>
