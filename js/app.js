@@ -89,6 +89,9 @@ var App = (function() {
 
 		// add a todo model into todos, and add it to the UI
 		addTodo: function() {
+			if ($todoInput.val().trim() === "") {
+				return false;
+			}
 			var todo = {
 				id: nextId(),
 				name: $todoInput.val(),
