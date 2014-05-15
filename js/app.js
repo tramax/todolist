@@ -32,7 +32,7 @@ var App = (function() {
 
 			// when the toggleDone is clicked, toggleDone
 			$todoList.on("click", todoDoneToggleSelector, function(evt) {
-				var $todoElem = $(evt.target);
+				var $todoElem = $(evt.target).parents("[data-todoId]");
 				that.toggleDone($todoElem);
 			});
 		},
@@ -79,11 +79,11 @@ var App = (function() {
 		},
 
 		// toggle the done flag for a todo item
-		toggleDone: function($todoElem) {		
+		toggleDone: function($todoElem) {
+			var targetId = parseInt($todoElem.attr("data-todoId"), 10);
 			todos.forEach(function(todo) {
-				if (todo.id === parseInt($todoElem.attr("data-todoId")), 10) {
+				if (todo.id === targetId) {
 					todo.done = !todo.done;
-					console.log("todo " + todo.id + " is " + (todo.done ? "done" : "not done"));
 				}
 			});
 		}
