@@ -130,6 +130,8 @@ var App = (function() {
 				}
 			});
 			$todoElem.toggleClass("todo-done");
+			var filter = $(".todolist-filters.strong").html();
+			this.toggleFilter(filter);
 		},
 
 		toggleEditing: function($todoElem) {
