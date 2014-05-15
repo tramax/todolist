@@ -63,11 +63,34 @@ input[type="checkbox"]:focus {
   padding: 15px 60px 15px 15px;
   margin: 0 0 0 45px;
   border-left: 1px solid #FF0000;
+  display: block;
 }
 
 .todo-done label {
   color: #aaa;
   text-decoration: line-through;
+}
+
+.todo-editing label {
+  display: none;
+}
+
+.todo-edit-box {
+  display: none;
+}
+
+.todo-edit-box {
+  padding: 10px;
+}
+
+.todo-editing .todo-edit-box {
+  display: block;
+  margin-left: 45px;
+  width: 300px;
+}
+
+.todo-editing .destroy {
+  display: none !important;
 }
 
 .toggle {

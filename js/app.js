@@ -9,7 +9,8 @@ var App = (function() {
 		$todoList = undefined, // cache the jQuery reference to the todo list
 		footer = undefined,
 		id = 1,
-		ENTER_KEY = 13;
+		ENTER_KEY = 13
+		ESC_KEY = 27;
 
 	function nextId() {
 		return id++;
@@ -51,6 +52,22 @@ var App = (function() {
 				}
 				that.toggleFilter(evt.target);
 			});
+
+			$todoList.on("dblclick", "label", function(evt) {
+				var $todoElem = $(evt.target).parents("[data-todoId]");
+				that.toggleEditing($todoElem);
+			});
+
+			$todoList.on("keyup", ".todo-edit-box", function(evt) {
+				if (evt.which === ENTER_KEY || evt.which === ESC_KEY) {
+					$(evt.target).blur();
+				}
+			});
+
+			$todoList.on("blur", ".todo-edit-box", function(evt) { 
+				var $todoElem = $(evt.target).parents("[data-todoId]");
+				that.saveEdits($todoElem);
+			});
 		},
 
 		// add a todo model into todos, and add it to the UI
@@ -86,9 +103,17 @@ var App = (function() {
 			var destroyDom = $("<button>", {
 				class: "destroy"
 			});
+			var editDom = $("<input>", {
+				class: "todo-edit-box",
+				attr: {
+					type: "text",
+					value: todo.name
+				}
+			})
 			var containerDom = $("<div>");
 			containerDom.append(toggleDom)
 				.append(labelDom)
+				.append(editDom)
 				.append(destroyDom);
 			todoDom.append(containerDom);
 			$todoList.append(todoDom);
@@ -105,7 +130,27 @@ var App = (function() {
 			$todoElem.toggleClass("todo-done");
 		},
 
-		destroyItem: function($todoElem) {
+		toggleEditing: function($todoElem) {
+			$todoElem.toggleClass("todo-editing");
+			if ($todoElem.hasClass("todo-editing"))
+				$todoElem.find(".todo-edit-box").focus();
+		},
+
+		saveEdits: function($todoElem) {
+			var id = parseInt($todoElem.attr("data-todoId"), 10);
+
+			// save to collection
+			for (var i = 0; i < todos.length; i++) {
+				if (todos[i].id === id) {
+					todos[i].name = $todoElem.find(".todo-edit-box").val();
+					$todoElem.find("label").text(todos[i].name);
+				}
+			}
+
+			$todoElem.toggleClass("todo-editing");
+		},
+
+destroyItem: function($todoElem) {
 			console.log("in destroyItem : ", $todoElem);
 			var index = 0;
 			var targetId = parseInt($todoElem.attr("data-todoId"), 10);
