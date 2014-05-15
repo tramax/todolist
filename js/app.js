@@ -26,6 +26,10 @@ var App = (function() {
 			$todoList = $(todoListSelector);
 			$pendingTodoCounterSpan = $(".todo-counter");
 			footer = $("footer");
+			if(localStorage['todoList']) {
+				todos = JSON.parse(localStorage['todoList']);
+				this.render();
+			}
 			this.bindEvents();
 			this.refreshCounter();
 		},
@@ -137,6 +141,10 @@ var App = (function() {
 			});
 			$todoElem.toggleClass("todo-done");
 
+			var filter = $(".todolist-filters.strong").html();
+			this.toggleFilter(filter);
+			localStorage.setItem("todoList", JSON.stringify(todos));
+		
 			this.refreshCounter();
 		},
 
@@ -158,6 +166,7 @@ var App = (function() {
 			}
 
 			$todoElem.toggleClass("todo-editing");
+			localStorage.setItem("todoList", JSON.stringify(todos));
 		},
 
 		destroyItem: function($todoElem) {
@@ -172,6 +181,7 @@ var App = (function() {
 				index++;
 			});
 			this.refreshCounter();
+			localStorage.setItem("todoList", JSON.stringify(todos));
 		},
 
 		toggleFilter: function(filter) {
@@ -216,6 +226,7 @@ var App = (function() {
 				$(".toggle").prop('checked', true);
 				$(".toggle-all").removeClass("false").addClass("true");
 				var filter = $(".todolist-filters.strong").html();
+				localStorage.setItem("todoList", JSON.stringify(todos));
 				this.toggleFilter(filter);
 				return;
 			}
@@ -226,6 +237,7 @@ var App = (function() {
 				$(".toggle").prop('checked', false);
 				$(".toggle-all").removeClass("true").addClass("false");
 				var filter = $(".todolist-filters.strong").html();
+				localStorage.setItem("todoList", JSON.stringify(todos));
 				this.toggleFilter(filter);
 				return;
 			}
