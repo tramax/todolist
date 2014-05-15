@@ -27,6 +27,7 @@ var App = (function() {
 			$pendingTodoCounterSpan = $(".todo-counter");
 			footer = $("footer");
 			this.bindEvents();
+			this.refreshCounter();
 		},
 
 		bindEvents: function() {
