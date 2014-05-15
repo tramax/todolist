@@ -3,6 +3,7 @@ var App = (function() {
 		todoSelector = "#new-todo", // CSS selector pointing to the todo input
 		todoListSelector = ".todolist-items ul", // CSS selector to the todo list (ul)
 		todoDoneToggleSelector = ".toggle", // CSS selector to the element to toggle the done flag
+		todoDestroySelector = ".destroy";
 		$todoInput = undefined, // cache the jQuery reference to the todo input
 		$todoList = undefined, // cache the jQuery reference to the todo list
 		id = 1,
@@ -34,6 +35,11 @@ var App = (function() {
 			$todoList.on("click", todoDoneToggleSelector, function(evt) {
 				var $todoElem = $(evt.target).parents("[data-todoId]");
 				that.toggleDone($todoElem);
+			});
+
+			$todoList.on("click", todoDestroySelector, function(evt) {
+				var $todoElem = $(evt.target).parents("[data-todoId]");
+				that.destroyItem($todoElem);
 			});
 		},
 
@@ -87,6 +93,19 @@ var App = (function() {
 				}
 			});
 			$todoElem.toggleClass("todo-done");
+		},
+
+		destroyItem: function($todoElem) {
+			console.log("in destroyItem : ", $todoElem);
+			var index = 0;
+			var targetId = parseInt($todoElem.attr("data-todoId"), 10);
+			todos.forEach(function(todo) {
+				if (todo.id === targetId) {
+					todos.splice( index, 1 );
+					$todoElem.remove();
+				}
+				index++;
+			});
 		}
 	};
 })();
