@@ -80,6 +80,13 @@ var App = (function() {
 			});
 		},
 
+		render: function() {
+			var that = this;
+			todos.forEach( function(todo) {
+				that.addTodoUi(todo);
+			});
+		},
+
 		// add a todo model into todos, and add it to the UI
 		addTodo: function() {
 			var todo = {
@@ -90,15 +97,15 @@ var App = (function() {
 			todos.push(todo);
 			this.addTodoUi(todo);
 			$todoInput.val(""); // clear text box
-
 			this.refreshCounter();
-
+			localStorage.setItem("todoList", JSON.stringify(todos));
 			return false;
 		},
 
 		// add a todo item to the todo list (UI)
 		addTodoUi: function(todo) {
 			var todoDom = $("<li>", {
+				class: (todo.done ? "todo-done" : ""),
 				attr: {
 					"data-todoId": todo.id
 				}
@@ -109,6 +116,8 @@ var App = (function() {
 					type: "checkbox"
 				}
 			});
+			if (todo.done)
+				toggleDom.attr("checked", true);
 			var labelDom = $("<label>", {
 				text: todo.name
 			});
@@ -144,7 +153,7 @@ var App = (function() {
 			var filter = $(".todolist-filters.strong").html();
 			this.toggleFilter(filter);
 			localStorage.setItem("todoList", JSON.stringify(todos));
-		
+
 			this.refreshCounter();
 		},
 
@@ -170,7 +179,6 @@ var App = (function() {
 		},
 
 		destroyItem: function($todoElem) {
-			console.log("in destroyItem : ", $todoElem);
 			var index = 0;
 			var targetId = parseInt($todoElem.attr("data-todoId"), 10);
 			todos.forEach(function(todo) {
