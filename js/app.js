@@ -2,7 +2,7 @@ var App = (function() {
 	var todos = [], // the todos data store
 		todoSelector = "#new-todo", // CSS selector pointing to the todo input
 		todoListSelector = ".todolist-items ul", // CSS selector to the todo list (ul)
-		todoDoneToggleSelector = ".todo-item", // CSS selector to the element to toggle the done flag
+		todoDoneToggleSelector = ".toggle", // CSS selector to the element to toggle the done flag
 		$todoInput = undefined, // cache the jQuery reference to the todo input
 		$todoList = undefined, // cache the jQuery reference to the todo list
 		id = 1,
@@ -54,34 +54,36 @@ var App = (function() {
 		// add a todo item to the todo list (UI)
 		addTodoUi: function(todo) {
 			var todoDom = $("<li>", {
-				class: "todo-item",
-				text: todo.name,
 				attr: {
 					"data-todoId": todo.id
 				}
 			});
-			$todoList.append(todoDom);
-		},
-
-		// add a todo item to the todo list (UI)
-		addTodoUi: function(todo) {
-			var todoDom = $("<li>", {
-				class: "todo-item",
-				text: todo.name,
+			var toggleDom = $("<input>", {
+				class: "toggle",
 				attr: {
-					"data-todoId": todo.id
+					type: "checkbox"
 				}
 			});
+			var labelDom = $("<label>", {
+				text: todo.name
+			});
+			var destroyDom = $("<button>", {
+				class: "destroy"
+			});
+			var containerDom = $("<div>");
+			containerDom.append(toggleDom)
+				.append(labelDom)
+				.append(destroyDom);
+			todoDom.append(containerDom);
 			$todoList.append(todoDom);
 		},
 
 		// toggle the done flag for a todo item
-		toggleDone: function($todoElem) {
-			$todoElem.toggleClass("todo-done");
-			
+		toggleDone: function($todoElem) {		
 			todos.forEach(function(todo) {
 				if (todo.id === parseInt($todoElem.attr("data-todoId")), 10) {
-					
+					todo.done = !todo.done;
+					console.log("todo " + todo.id + " is " + (todo.done ? "done" : "not done"));
 				}
 			});
 		}
