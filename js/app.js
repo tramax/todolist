@@ -82,9 +82,12 @@ var App = (function() {
 
 		render: function() {
 			var that = this;
+			var lastId = 1;
 			todos.forEach( function(todo) {
 				that.addTodoUi(todo);
+				lastId = lastId < todo.id ? todo.id : lastId;
 			});
+			id = lastId + 1;
 		},
 
 		// add a todo model into todos, and add it to the UI
