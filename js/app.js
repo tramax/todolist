@@ -4,8 +4,10 @@ var App = (function() {
 		todoListSelector = ".todolist-items ul", // CSS selector to the todo list (ul)
 		todoDoneToggleSelector = ".toggle", // CSS selector to the element to toggle the done flag
 		todoDestroySelector = ".destroy";
+		todoListFilterSelector = ".todolist-filters";
 		$todoInput = undefined, // cache the jQuery reference to the todo input
 		$todoList = undefined, // cache the jQuery reference to the todo list
+		footer = undefined,
 		id = 1,
 		ENTER_KEY = 13;
 
@@ -18,6 +20,7 @@ var App = (function() {
 		init: function() {
 			$todoInput = $(todoSelector);
 			$todoList = $(todoListSelector);
+			footer = $("footer");
 			this.bindEvents();
 		},
 
@@ -40,6 +43,13 @@ var App = (function() {
 			$todoList.on("click", todoDestroySelector, function(evt) {
 				var $todoElem = $(evt.target).parents("[data-todoId]");
 				that.destroyItem($todoElem);
+			});
+
+			footer.on("click", todoListFilterSelector, function(evt) {
+				if( $(evt.target).hasClass("strong") ) {
+					return;
+				}
+				that.toggleFilter(evt.target);
 			});
 		},
 
@@ -106,7 +116,39 @@ var App = (function() {
 				}
 				index++;
 			});
-		}
+		},
+
+		toggleFilter: function(target) {
+			var filter = $(target).html();
+			$(".todolist-filters").removeClass("strong");
+			$(target).addClass("strong");
+			if( filter == "All" ) {
+				$(todoListSelector).find("li").removeClass("hide");
+				return;
+			}
+			if( filter == "Active" ) {
+				todos.forEach(function(todo) {
+					if( todo.done ) {
+						$(todoListSelector).find("[data-todoId="+todo.id+"]").addClass("hide");
+					}
+					else {
+						$(todoListSelector).find("[data-todoId="+todo.id+"]").removeClass("hide");
+					}
+				});
+				return;
+			}
+			if( filter == "Completed" ) {
+				todos.forEach(function(todo) {
+					if( todo.done ) {
+						$(todoListSelector).find("[data-todoId="+todo.id+"]").removeClass("hide");
+					}
+					else {
+						$(todoListSelector).find("[data-todoId="+todo.id+"]").addClass("hide");
+					}
+				});
+				return;
+			}
+		},
 	};
 })();
 
