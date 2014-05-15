@@ -3,6 +3,7 @@ var App = (function() {
 		todoSelector = "#new-todo", // CSS selector pointing to the todo input
 		todoListSelector = ".todolist-items ul", // CSS selector to the todo list (ul)
 		todoDoneToggleSelector = ".toggle", // CSS selector to the element to toggle the done flag
+		todoToggleAllSelector = ".toggle-all";
 		todoDestroySelector = ".destroy";
 		todoListFilterSelector = ".todolist-filters";
 		$todoInput = undefined, // cache the jQuery reference to the todo input
@@ -46,11 +47,12 @@ var App = (function() {
 				that.destroyItem($todoElem);
 			});
 
+			$todoList.on("click", todoToggleAllSelector, function(evt) {
+				that.toggleAll();
+			})
+
 			footer.on("click", todoListFilterSelector, function(evt) {
-				if( $(evt.target).hasClass("strong") ) {
-					return;
-				}
-				that.toggleFilter(evt.target);
+				that.toggleFilter(evt.target.innerHTML);
 			});
 
 			$todoList.on("dblclick", "label", function(evt) {
@@ -163,10 +165,9 @@ destroyItem: function($todoElem) {
 			});
 		},
 
-		toggleFilter: function(target) {
-			var filter = $(target).html();
+		toggleFilter: function(filter) {
 			$(".todolist-filters").removeClass("strong");
-			$(target).addClass("strong");
+			$(".todolist-filters:contains("+filter+")").addClass("strong");
 			if( filter == "All" ) {
 				$(todoListSelector).find("li").removeClass("hide");
 				return;
@@ -191,6 +192,32 @@ destroyItem: function($todoElem) {
 						$(todoListSelector).find("[data-todoId="+todo.id+"]").addClass("hide");
 					}
 				});
+				return;
+			}
+		},
+
+		toggleAll: function() {
+			if( todos.length == 0 ) {
+				return;
+			}
+			if( $(todoToggleAllSelector).hasClass("false") ) {
+				todos.forEach( function(todo) {
+					todo.done = true;
+				});
+				$(".toggle").prop('checked', true);
+				$(".toggle-all").removeClass("false").addClass("true");
+				var filter = $(".todolist-filters.strong").html();
+				this.toggleFilter(filter);
+				return;
+			}
+			else {
+				todos.forEach( function(todo) {
+					todo.done = false;
+				});
+				$(".toggle").prop('checked', false);
+				$(".toggle-all").removeClass("true").addClass("false");
+				var filter = $(".todolist-filters .strong").html();
+				this.toggleFilter(filter);
 				return;
 			}
 		},
