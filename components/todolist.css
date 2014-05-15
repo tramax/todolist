@@ -65,6 +65,11 @@ input[type="checkbox"]:focus {
   border-left: 1px solid #FF0000;
 }
 
+.todo-done label {
+  color: #aaa;
+  text-decoration: line-through;
+}
+
 .toggle {
   height: 40px;
   width: 40px;

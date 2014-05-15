@@ -86,6 +86,7 @@ var App = (function() {
 					todo.done = !todo.done;
 				}
 			});
+			$todoElem.toggleClass("todo-done");
 		}
 	};
 })();
