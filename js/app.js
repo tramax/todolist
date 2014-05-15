@@ -234,24 +234,25 @@ var App = (function() {
 				todos.forEach( function(todo) {
 					todo.done = true;
 				});
+				$todoList.find("li:not(todo-done)").addClass("todo-done");
 				$(".toggle").prop('checked', true);
 				$(".toggle-all").removeClass("false").addClass("true");
 				var filter = $(".todolist-filters.strong").html();
 				localStorage.setItem("todoList", JSON.stringify(todos));
 				this.toggleFilter(filter);
-				return;
-			}
-			else {
+			} else {
 				todos.forEach( function(todo) {
 					todo.done = false;
 				});
+				$todoList.find(".todo-done").removeClass("todo-done");
 				$(".toggle").prop('checked', false);
 				$(".toggle-all").removeClass("true").addClass("false");
 				var filter = $(".todolist-filters.strong").html();
 				localStorage.setItem("todoList", JSON.stringify(todos));
 				this.toggleFilter(filter);
-				return;
 			}
+
+			this.refreshCounter();
 		},
 
 		refreshCounter: function() {
@@ -263,6 +264,7 @@ var App = (function() {
 			});
 
 			$pendingTodoCounterSpan.text(counter);
+			console.log(JSON.stringify(todos));
 		}
 	};
 })();
