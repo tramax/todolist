@@ -35,7 +35,7 @@ li {
 }
 
 .center {
-  margin: 0 20%;
+  margin: 0 5%;
 }
 
 .strong {
@@ -70,9 +70,12 @@ input[type="checkbox"]:focus {
 }
 
 input[type="text"] {
-  width: 80%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 85%;
   border: none;
-  padding: 15px 60px 15px 15px;
+  padding: 15px;
   margin-left: 45px;
   border-left: 1px solid #FF0000;
   font-size: 1em;
@@ -193,4 +196,8 @@ footer {
   background: #EDEDED;
   text-align: center;
   padding: 0 15px;
+}
+
+@media screen and (min-width: 28em) {
+  
 }
