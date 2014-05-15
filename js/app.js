@@ -10,7 +10,9 @@ var App = (function() {
 		footer = undefined,
 		id = 1,
 		ENTER_KEY = 13
-		ESC_KEY = 27;
+		ESC_KEY = 27,
+		pendingTodos = 0,
+		$pendingTodoCounterSpan = undefined; // cache jQuery reference to counter
 
 	function nextId() {
 		return id++;
@@ -21,6 +23,7 @@ var App = (function() {
 		init: function() {
 			$todoInput = $(todoSelector);
 			$todoList = $(todoListSelector);
+			$pendingTodoCounterSpan = $(".todo-counter");
 			footer = $("footer");
 			this.bindEvents();
 		},
@@ -81,6 +84,8 @@ var App = (function() {
 			this.addTodoUi(todo);
 			$todoInput.val(""); // clear text box
 
+			this.refreshCounter();
+
 			return false;
 		},
 
@@ -128,6 +133,8 @@ var App = (function() {
 				}
 			});
 			$todoElem.toggleClass("todo-done");
+
+			this.refreshCounter();
 		},
 
 		toggleEditing: function($todoElem) {
@@ -150,7 +157,7 @@ var App = (function() {
 			$todoElem.toggleClass("todo-editing");
 		},
 
-destroyItem: function($todoElem) {
+		destroyItem: function($todoElem) {
 			console.log("in destroyItem : ", $todoElem);
 			var index = 0;
 			var targetId = parseInt($todoElem.attr("data-todoId"), 10);
@@ -161,6 +168,7 @@ destroyItem: function($todoElem) {
 				}
 				index++;
 			});
+			this.refreshCounter();
 		},
 
 		toggleFilter: function(target) {
@@ -194,6 +202,17 @@ destroyItem: function($todoElem) {
 				return;
 			}
 		},
+
+		refreshCounter: function() {
+			var counter = 0;
+
+			todos.forEach(function(todo) {
+				if (!todo.done)
+					counter++;
+			});
+
+			$pendingTodoCounterSpan.text(counter);
+		}
 	};
 })();
 
