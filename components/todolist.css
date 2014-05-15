@@ -2,8 +2,48 @@ body {
   background: #EAEAEA;
 }
 
+section {
+}
+
+header {
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+}
+
+label {
+  word-wrap: break-word;
+}
+
+h1 {
+  font-size: 6em;
+  font-weight: 200;
+  margin: 0.2em 0;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  position: relative;
+  font-size: 2em;
+  border: 1px solid #000000;
+  background: #FDFDFD;
+}
+
+.center {
+  margin: 0 20%;
+}
+
 .strong {
   font-weight: 700;
+}
+
+.hide {
+  display: none;
 }
 
 input[type="checkbox"] {
@@ -29,27 +69,22 @@ input[type="checkbox"]:focus {
   outline: none;
 }
 
-.todolist-items {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15);
-}
-
-.todolist-items li {
-  border: 1px solid #000000;
-  position: relative;
-  font-size: 24px;
-  background: #FDFDFD;
-}
-
-.todolist-items #new-todo {
+input[type="text"] {
+  width: 80%;
   border: none;
   padding: 15px 60px 15px 15px;
   margin-left: 45px;
   border-left: 1px solid #FF0000;
+  font-size: 1em;
   background: #FDFDFD;
 }
 
-.todolist-items #new-todo:focus {
+input[type="text"]:focus {
   outline: none;
+}
+
+.todolist-items {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15);
 }
 
 .todolist-items > ul {
@@ -100,8 +135,8 @@ input[type="checkbox"]:focus {
 
 .toggle::after {
   content: "✔";
-  line-height: 43px;
-  font-size: 20px;
+  line-height: 0.8em;
+  font-size: 0.8em;
   color: #d9d9d9;
   text-shadow: 0 -1px 0 #bfbfbf;
 }
@@ -115,13 +150,12 @@ input[type="checkbox"]:focus {
 
 .toggle-all::before {
   content: "»";
-  font-size: 50px;
+  font-size: 2em;
   color: #d9d9d9;
-  padding: 0 25px 7px;
 }
 
 .toggle-all {
-  height: 41px;
+  height: 60px;
   width: 65px;
   text-align: center;
   -webkit-transform: rotate(90deg);
