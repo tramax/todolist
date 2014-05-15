@@ -10,16 +10,47 @@
 </head>
 <body>
   <section class="todolist-container container">
-  <h1>todos</h1>
-  <div class="todolist-items col-md-5">
-    <ul>
-      <li>
-        <input id="new-todo" placeholder="What needs to be done?">
-      </li>
-      <li>item 1</li>
-      <li>item 2</li>
-    </ul>
-  </div>
+    <header>
+      <h1>todos</h1>
+    </header>
+    <section class="todolist-items">
+      <ul>
+        <li>
+          <div>
+            <input class="toggle-all" type="checkbox">
+            <input type="text" id="new-todo" placeholder="What needs to be done?" autofocus>
+          </div>
+        </li>
+        <li>
+          <div>
+            <input class="toggle" type="checkbox">
+            <label>First item</label>
+            <button class="destroy"></button>
+          </div>
+        </li>
+        <li>
+          <div>
+            <input class="toggle" type="checkbox">
+            <label>Second item</label>
+            <button class="destroy"></button>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <footer>
+      <span class="todolist-counter">
+        <strong>1 item left</strong>
+      </span>
+      <span class="todolist-filters strong">
+        All
+      </span>
+      <span class="todolist-filters">
+        Active
+      </span>
+      <span class="todolist-filters">
+        Completed
+      </span>
+    </footer>
   </section>
   <script type="text/javascript" src="components/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="components/bootstrap/js/bootstrap.min.js"></script>
