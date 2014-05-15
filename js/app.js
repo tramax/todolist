@@ -136,6 +136,8 @@ var App = (function() {
 				}
 			});
 			$todoElem.toggleClass("todo-done");
+
+			this.refreshCounter();
 		},
 
 		toggleEditing: function($todoElem) {
