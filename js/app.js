@@ -171,7 +171,7 @@ var App = (function() {
 				});
 				$(".toggle").prop('checked', false);
 				$(".toggle-all").removeClass("true").addClass("false");
-				var filter = $(".todolist-filters .strong").html();
+				var filter = $(".todolist-filters.strong").html();
 				this.toggleFilter(filter);
 				return;
 			}
