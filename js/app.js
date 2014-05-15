@@ -23,6 +23,10 @@ var App = (function() {
 			$todoInput = $(todoSelector);
 			$todoList = $(todoListSelector);
 			footer = $("footer");
+			if(localStorage['todoList']) {
+				todos = JSON.parse(localStorage['todoList']);
+				this.render();
+			}
 			this.bindEvents();
 		},
 
@@ -72,6 +76,13 @@ var App = (function() {
 			});
 		},
 
+		render: function() {
+			var that = this;
+			todos.forEach( function(todo) {
+				that.addTodoUi(todo);
+			});
+		},
+
 		// add a todo model into todos, and add it to the UI
 		addTodo: function() {
 			var todo = {
@@ -82,7 +93,7 @@ var App = (function() {
 			todos.push(todo);
 			this.addTodoUi(todo);
 			$todoInput.val(""); // clear text box
-
+			localStorage.setItem("todoList", JSON.stringify(todos));
 			return false;
 		},
 
@@ -132,6 +143,7 @@ var App = (function() {
 			$todoElem.toggleClass("todo-done");
 			var filter = $(".todolist-filters.strong").html();
 			this.toggleFilter(filter);
+			localStorage.setItem("todoList", JSON.stringify(todos));
 		},
 
 		toggleEditing: function($todoElem) {
@@ -152,6 +164,7 @@ var App = (function() {
 			}
 
 			$todoElem.toggleClass("todo-editing");
+			localStorage.setItem("todoList", JSON.stringify(todos));
 		},
 
 destroyItem: function($todoElem) {
@@ -165,6 +178,7 @@ destroyItem: function($todoElem) {
 				}
 				index++;
 			});
+			localStorage.setItem("todoList", JSON.stringify(todos));
 		},
 
 		toggleFilter: function(filter) {
@@ -209,6 +223,7 @@ destroyItem: function($todoElem) {
 				$(".toggle").prop('checked', true);
 				$(".toggle-all").removeClass("false").addClass("true");
 				var filter = $(".todolist-filters.strong").html();
+				localStorage.setItem("todoList", JSON.stringify(todos));
 				this.toggleFilter(filter);
 				return;
 			}
@@ -219,6 +234,7 @@ destroyItem: function($todoElem) {
 				$(".toggle").prop('checked', false);
 				$(".toggle-all").removeClass("true").addClass("false");
 				var filter = $(".todolist-filters.strong").html();
+				localStorage.setItem("todoList", JSON.stringify(todos));
 				this.toggleFilter(filter);
 				return;
 			}
